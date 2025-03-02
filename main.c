@@ -40,12 +40,14 @@ int main() {
     srand(time(NULL)); // Seed the random number generator
 
     int upper_limit;
-    printf("Enter the upper limit for the number of random bytes generated (0 to 5): ");
-    scanf("%d", &upper_limit);
-
-    if (upper_limit < 0 || upper_limit > 5) {
-        printf("Invalid input. Please enter a number between 0 and 5.\n");
-        return 1;
+    while (1) {
+        printf("Enter the upper limit for the number of random bytes generated (0 to 5): ");
+        if (scanf("%d", &upper_limit) == 1 && upper_limit >= 0 && upper_limit <= 5) {
+            break; // Valid input, exit the loop
+        } else {
+            printf("Invalid input. Please enter a number between 0 and 5.\n");
+            while (getchar() != '\n'); // Clear the input buffer
+        }
     }
 
     int timer = 0;
