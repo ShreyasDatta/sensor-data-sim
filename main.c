@@ -10,8 +10,8 @@ unsigned char buffer[BUFFER_SIZE];
 int buffer_index = 0;
 
 // Function to generate random bytes and add to buffer
-void generate_data() {
-    int num_bytes = rand() % 6; // Random number of bytes (0 to 5)
+void generate_data(int upper_limit) {
+    int num_bytes = rand() % (upper_limit + 1); // Random number of bytes (0 to upper_limit)
     for (int i = 0; i < num_bytes; i++) {
         buffer[buffer_index] = rand() % 256; // Random byte (0 to 255)
         buffer_index = (buffer_index + 1) % BUFFER_SIZE; // Circular buffer
@@ -39,10 +39,19 @@ void process_data() {
 int main() {
     srand(time(NULL)); // Seed the random number generator
 
+    int upper_limit;
+    printf("Enter the upper limit for the number of random bytes generated (0 to 5): ");
+    scanf("%d", &upper_limit);
+
+    if (upper_limit < 0 || upper_limit > 5) {
+        printf("Invalid input. Please enter a number between 0 and 5.\n");
+        return 1;
+    }
+
     int timer = 0;
     while (1) {
         // Simulate timer task (every second)
-        generate_data();
+        generate_data(upper_limit);
         timer++;
 
         // Simulate main task (every 10 seconds)
