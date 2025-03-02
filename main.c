@@ -22,11 +22,15 @@ void generate_data() {
 void process_data() {
     if (buffer_index >= 50) {
         printf("Latest 50 bytes (hex): ");
-        for (int i = buffer_index - 50; i < buffer_index; i++) {
-            printf("%02X ", buffer[i % BUFFER_SIZE]);
+        for (int i = 0; i < 50; i++) {
+            int index = (buffer_index - 50 + i) % BUFFER_SIZE;
+            printf("%02X ", buffer[index]);
         }
         printf("\n");
         buffer_index -= 50; // Remove printed bytes
+        if (buffer_index < 0) {
+            buffer_index += BUFFER_SIZE; // Adjust for circular buffer wrap-around
+        }
     } else {
         printf("Not enough data (current bytes: %d)\n", buffer_index);
     }
